@@ -39,7 +39,12 @@ def test_load_data_and_train_saves_to_s3(tmp_path):
     # Assertions to validate the data
     assert 'r_2_train' in metrics, "r_2_train key should be in the metrics"
 
+@mock_s3
 def test_load_data_and_train(tmp_path):
+    # Initialize the mock S3 environment
+    conn = boto3.resource('s3', region_name='us-east-1')
+    conn.create_bucket(Bucket=MODEL_STATS_BUCKET)
+
     load_data_and_train(create_dummy_data(),"test_prefix",tmp_path)
 
     # Check if the model file is created
