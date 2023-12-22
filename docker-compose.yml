@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  fastapi:
+    build: ./backend/src/main
+    ports:
+      - "8000:8000"
+
+  dash:
+    build: ./frontend/src/main
+    ports:
+      - "8050:8050"
