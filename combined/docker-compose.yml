@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+
+  dash:
+    build: ./src/main
+    ports:
+      - "8050:8050"
