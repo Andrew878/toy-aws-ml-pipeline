@@ -57,7 +57,9 @@ def update_output(n_clicks, input_value):
         numbers_list = [float(num.strip()) for num in input_value.split(",")]
         # Prepare data for the API request
         average = asyncio.run(model_predict(numbers_list))
-        return str(average)
+        average_str = str(average)
+        add_to_db(input_value,average_str)
+
     except ValueError:
         return "Invalid input. Please enter numbers separated by commas."
     except requests.exceptions.RequestException as e:
@@ -65,7 +67,26 @@ def update_output(n_clicks, input_value):
 
 
 async def model_predict(numbers):
-    return {"average": np.average(numbers)}
+    return np.average(numbers)
+
+
+def get_db_connection():
+    return psycopg2.connect(
+        host="db",  # Name of the service in docker-compose
+        dbname=os.environ["DB_NAME"],
+        user=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+    )
+
+def add_to_db(input_value:str, average_str:str)->None:
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO predictions (input, prediction) VALUES (%s, %s)", (input_value, average_str))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
 
 # Run the app
 if __name__ == "__main__":

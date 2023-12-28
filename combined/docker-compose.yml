@@ -10,3 +10,24 @@ services:
     ports:
       - "8050:8050"
     platform: linux/amd64  # Specify the platform here
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: mydatabase
+      DB_USER: myuser
+      DB_PASSWORD: mypassword
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: { }
