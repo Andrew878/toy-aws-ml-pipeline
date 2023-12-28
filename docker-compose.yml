@@ -2,11 +2,21 @@ version: '3'
 
 services:
   fastapi:
-    build: ./backend/src/main
+    build:
+      context: ./backend/src/main
+      dockerfile: Dockerfile
+      args:
+        BUILDPLATFORM: linux/amd64
     ports:
       - "8000:8000"
+    platform: linux/amd64
 
   dash:
-    build: ./frontend/src/main
+    build:
+      context: ./frontend/src/main
+      dockerfile: Dockerfile
+      args:
+        BUILDPLATFORM: linux/amd64
     ports:
       - "8050:8050"
+    platform: linux/amd64
