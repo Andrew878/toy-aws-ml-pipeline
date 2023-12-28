@@ -1,8 +1,12 @@
-version: '3'
+version: '3.8'  # It's good to use a more recent version if possible
 
 services:
-
   dash:
-    build: ./src/main
+    build:
+      context: ./src/main
+      dockerfile: Dockerfile
+      args:
+        BUILDPLATFORM: linux/amd64
     ports:
       - "8050:8050"
+    platform: linux/amd64  # Specify the platform here
