@@ -1,6 +1,6 @@
 import asyncio
-import os
 import logging
+import os
 
 import dash
 import dash_bootstrap_components as dbc
@@ -8,7 +8,10 @@ import numpy as np
 import psycopg2
 import requests
 from dash import Input, Output, dcc, html
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 # Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -60,7 +63,7 @@ def update_output(n_clicks, input_value):
         # Prepare data for the API request
         average = asyncio.run(model_predict(numbers_list))
         average_str = str(average)
-        add_to_db(input_value,average_str)
+        add_to_db(input_value, average_str)
         return average_str
     except ValueError:
         return "Invalid input. Please enter numbers separated by commas."
@@ -81,15 +84,18 @@ def get_db_connection():
         password=os.environ["DB_PASSWORD"],
     )
 
-def add_to_db(input_value:str, average_str:str)->None:
+
+def add_to_db(input_value: str, average_str: str) -> None:
     logging.info(f"Inserting to DB: {input_value},{average_str}")
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO predictions (input, prediction) VALUES (%s, %s)", (input_value, average_str))
+    cursor.execute(
+        "INSERT INTO predictions (input, prediction) VALUES (%s, %s)",
+        (input_value, average_str),
+    )
     conn.commit()
     cursor.close()
     conn.close()
-
 
 
 # Run the app

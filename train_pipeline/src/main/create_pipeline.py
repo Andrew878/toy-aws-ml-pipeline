@@ -9,11 +9,9 @@ from sagemaker.workflow.pipeline import Pipeline
 from sagemaker.workflow.step_collections import RegisterModel
 from sagemaker.workflow.steps import TrainingStep
 
-from train_pipeline.src.main.constants import (
-    INPUT_DATA_BUCKET,
-    INPUT_DATA_NAME,
-    MODEL_STATS_BUCKET,
-)
+from train_pipeline.src.main.constants import (INPUT_DATA_BUCKET,
+                                               INPUT_DATA_NAME,
+                                               MODEL_STATS_BUCKET)
 
 # Initialize the SageMaker session and role
 sagemaker_session = sagemaker.Session()

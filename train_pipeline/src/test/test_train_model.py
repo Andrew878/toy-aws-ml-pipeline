@@ -9,12 +9,9 @@ import pytest
 from moto import mock_s3
 from sklearn.linear_model import LinearRegression
 
-from train_pipeline.src.main.train_model import (
-    MODEL_DIR,
-    MODEL_STATS_BUCKET,
-    create_dummy_data,
-    load_data_and_train,
-)
+from train_pipeline.src.main.train_model import (MODEL_DIR, MODEL_STATS_BUCKET,
+                                                 create_dummy_data,
+                                                 load_data_and_train)
 
 
 def test_create_dummy_data():
