@@ -1,4 +1,4 @@
-version: '3.8'  # It's good to use a more recent version if possible
+version: '3.8'
 
 services:
   dash:
@@ -9,4 +9,12 @@ services:
         BUILDPLATFORM: linux/amd64
     ports:
       - "8050:8050"
-    platform: linux/amd64  # Specify the platform here
+    platform: linux/amd64
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+volumes:
+  postgres_data: { }
