@@ -1,13 +1,14 @@
 import asyncio
 import logging
 import os
-import pandas as pd
+
 import dash
 import dash_bootstrap_components as dbc
 import numpy as np
+import pandas as pd
 import psycopg2
 import requests
-from dash import Input, Output, dcc, html, dash_table
+from dash import Input, Output, dash_table, dcc, html
 from dash.exceptions import PreventUpdate
 
 logging.basicConfig(
@@ -21,10 +22,12 @@ for key in os.environ:
 # Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 # Add a button for refreshing the data
-refresh_button = dbc.Button("Refresh Data", id="refresh-button", className="mb-3", n_clicks=0)
+refresh_button = dbc.Button(
+    "Refresh Data", id="refresh-button", className="mb-3", n_clicks=0
+)
 
 # Add a placeholder for the data table
-data_table = dash_table.DataTable(id='data-table')
+data_table = dash_table.DataTable(id="data-table")
 # App layout
 app.layout = dbc.Container(
     [
@@ -96,7 +99,7 @@ def get_db_connection():
     logging.info("Connecting to DB")
     try:
         return psycopg2.connect(
-            host=os.environ.get('DB_HOST'),
+            host=os.environ.get("DB_HOST"),
             dbname=os.environ["DB_NAME"],
             user=os.environ["DB_USER"],
             password=os.environ["DB_PASSWORD"],
@@ -118,6 +121,7 @@ def add_to_db(input_value: str, average_str: str) -> None:
     cursor.close()
     conn.close()
 
+
 # Assuming you have a function to fetch the latest 20 entries from your database
 def fetch_latest_entries():
     logging.info(f"Fetching last 20 entries from DB")
@@ -125,15 +129,17 @@ def fetch_latest_entries():
     query = "SELECT * FROM predictions ORDER BY created_at DESC LIMIT 20"
     return pd.read_sql_query(query, connection)
 
+
 @app.callback(
-    Output('data-table', 'data'),
-    [Input('refresh-button', 'n_clicks')],
+    Output("data-table", "data"),
+    [Input("refresh-button", "n_clicks")],
     prevent_initial_call=True,
 )
 def update_table(n_clicks):
     if n_clicks is None:
         raise PreventUpdate
-    return fetch_latest_entries().to_dict('records')
+    return fetch_latest_entries().to_dict("records")
+
 
 # Run the app
 if __name__ == "__main__":
