@@ -1,10 +1,14 @@
 import json
+import logging
 
 import dash
 import dash_bootstrap_components as dbc
 import requests
 from dash import Input, Output, dcc, html
 
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 # Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -51,9 +55,11 @@ def update_output(n_clicks, input_value):
         payload = json.dumps({"n": numbers_list})
         headers = {"Content-Type": "application/json"}
         # Send request to FastAPI endpoint
+        logging.info(f"Fast-API request: {payload},{headers}")
         response = requests.post(
             "http://fastapi:8000/model_predict", data=payload, headers=headers
         )
+        logging.info(f"Fast-API response: {response}")
         average = response.json()["average"]
         return f"Average: {average}"
     except ValueError:
@@ -64,4 +70,5 @@ def update_output(n_clicks, input_value):
 
 # Run the app
 if __name__ == "__main__":
+    logging.info("Starting dash frontend...")
     app.run_server(debug=True, host="0.0.0.0", port=8050)
