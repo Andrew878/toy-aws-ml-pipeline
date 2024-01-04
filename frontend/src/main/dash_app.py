@@ -56,9 +56,10 @@ def update_output(n_clicks, input_value):
         headers = {"Content-Type": "application/json"}
         # Send request to FastAPI endpoint
         logging.info(f"Fast-API request: {payload},{headers}")
-        response = requests.post(
-            "http://fastapi:8000/model_predict", data=payload, headers=headers
-        )
+        # response = requests.post(
+        #     "http://fastapi:8000/model_predict", data=payload, headers=headers
+        # )
+        response = requests.post("http://fastapi.dummyfastapi:8000/model_predict", data=payload, headers=headers)
         logging.info(f"Fast-API response: {response}")
         average = response.json()["average"]
         return f"Average: {average}"

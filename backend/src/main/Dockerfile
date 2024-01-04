@@ -9,7 +9,6 @@ COPY ./main.py /usr/src/app
 
 # Install any needed packages specified in requirements.txt
 COPY requirements.txt /usr/src/app/
-
 RUN pip install wheel
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
