@@ -1,0 +1,102 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:IAM_NO:task-definition/backend_fastapi:1",
+    "containerDefinitions": [
+        {
+            "name": "backend_fastapi",
+            "image": "IAM_NO.dkr.ecr.us-east-1.amazonaws.com/dummy-mle-pipeline:backend_fastapi",
+            "cpu": 256,
+            "memory": 512,
+            "memoryReservation": 512,
+            "portMappings": [
+                {
+                    "name": "backend_fastapi-8000-tcp",
+                    "containerPort": 8000,
+                    "hostPort": 8000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/backend_fastapi",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
+        }
+    ],
+    "family": "backend_fastapi",
+    "taskRoleArn": "arn:aws:iam::IAM_NO:role/backend_fastapi_task_role",
+    "executionRoleArn": "arn:aws:iam::IAM_NO:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 1,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-01-02T14:11:58.857Z",
+    "registeredBy": "arn:aws:iam::IAM_NO:user/Andrew",
+    "tags": [
+        {
+            "key": "learning",
+            "value": ""
+        },
+        {
+            "key": "dummy-mle-pipeline",
+            "value": ""
+        }
+    ]
+}
