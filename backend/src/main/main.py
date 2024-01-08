@@ -1,6 +1,12 @@
+import logging
+
 import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 app = FastAPI()
 
@@ -11,7 +17,7 @@ class NumbersInput(BaseModel):
 
 @app.post("/model_predict")
 async def model_predict(numbers: NumbersInput):
-    print("making pred:", numbers.n)
+    logging.info(f"Making prediction with: {numbers.n}")
     return {"average": np.average(numbers.n)}
 
 
